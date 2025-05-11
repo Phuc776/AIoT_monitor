@@ -3,6 +3,8 @@ package com.main.aiot_service.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,11 @@ public class User {
     @Column(name = "role")
     public Role role;
 
+    @ManyToMany
+    @JoinTable(
+            name = "profile_operator",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "profile_id")
+    )
+    private List<Profile> assignedProfiles;
 }

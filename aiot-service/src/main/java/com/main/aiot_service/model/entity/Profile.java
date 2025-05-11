@@ -27,11 +27,6 @@ public class Profile {
     private CommandList commandList;
 
     @ManyToMany(mappedBy = "assignedProfiles")
-    @JoinTable(
-            name = "profile_operator",
-            joinColumns = @JoinColumn(name = "profile_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
     private List<User> assignedOperators;
 }
 

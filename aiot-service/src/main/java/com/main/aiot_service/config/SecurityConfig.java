@@ -25,8 +25,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login", "/auth/reset-password").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/manager/**").hasRole("MANAGER")
-                        .requestMatchers("/engineer/**").hasRole("ENGINEER")
+                        .requestMatchers("/team-lead/**").hasRole("TEAM_LEAD")
+                        .requestMatchers("/operator/**").hasRole("OPERATOR")
+                        .requestMatchers("/supervisor/**").hasRole("SUPERVISOR")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
