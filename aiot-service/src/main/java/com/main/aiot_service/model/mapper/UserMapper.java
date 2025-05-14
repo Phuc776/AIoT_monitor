@@ -1,20 +1,20 @@
 package com.main.aiot_service.model.mapper;
 
 import com.main.aiot_service.model.entity.User;
-import com.main.aiot_service.model.dto.UserDto;
+import com.main.aiot_service.model.dto.UserDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-    public static UserDto toDto(User user) {
-        return UserDto.builder()
+    public static UserDTO toDto(User user) {
+        return UserDTO.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .role(user.getRole())
                 .build();
     }
 
-    public static User toEntity(UserDto userDto, String encodedPassword) {
+    public static User toEntity(UserDTO userDto, String encodedPassword) {
         return User.builder()
                 .id(userDto.getId())
                 .username(userDto.getUsername())

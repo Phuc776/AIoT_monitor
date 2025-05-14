@@ -3,6 +3,7 @@ package com.main.aiot_service.controller.team_lead;
 import com.main.aiot_service.model.dto.DeviceDTO;
 import com.main.aiot_service.model.request.DeviceRequest;
 import com.main.aiot_service.model.response.DeviceResponse;
+import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.service.team_lead.DeviceServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +35,8 @@ public class DeviceController {
         return deviceService.getDeviceById(id);
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteDevice(Long id) {
-//        deviceService.deleteDevice(id);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping("/{id}")
+    public MessageResponse deleteDevice(Long id) {
+        return deviceService.deleteDevice(id);
+    }
 }

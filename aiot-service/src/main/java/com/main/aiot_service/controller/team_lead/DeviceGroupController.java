@@ -1,7 +1,7 @@
 package com.main.aiot_service.controller.team_lead;
 
 import com.main.aiot_service.model.dto.DeviceDTO;
-import com.main.aiot_service.model.dto.DeviceGroupDto;
+import com.main.aiot_service.model.dto.DeviceGroupDTO;
 import com.main.aiot_service.model.request.DeviceGroupRequest;
 import com.main.aiot_service.model.response.DeviceGroupResponse;
 import com.main.aiot_service.service.team_lead.IDeviceGroupService;
@@ -29,7 +29,7 @@ public class DeviceGroupController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DeviceGroupDto>> getAllGroups(Pageable pageable) {
+    public ResponseEntity<Page<DeviceGroupDTO>> getAllGroups(Pageable pageable) {
         return ResponseEntity.ok(deviceGroupService.getAllGroups(pageable));
     }
 

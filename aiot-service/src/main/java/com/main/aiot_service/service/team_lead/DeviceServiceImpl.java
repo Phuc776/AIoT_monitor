@@ -6,6 +6,7 @@ import com.main.aiot_service.model.entity.DeviceGroup;
 import com.main.aiot_service.model.mapper.DeviceMapper;
 import com.main.aiot_service.model.request.DeviceRequest;
 import com.main.aiot_service.model.response.DeviceResponse;
+import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.repository.DeviceGroupRepository;
 import com.main.aiot_service.repository.DeviceRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +52,8 @@ public class DeviceServiceImpl implements IDeviceService{
     }
 
     @Override
-    public DeviceResponse deleteDevice(Long id) {
+    public MessageResponse deleteDevice(Long id) {
         deviceRepository.deleteById(id);
-        return new DeviceResponse(200, "Device deleted successfully", null);
+        return new MessageResponse(200, "Device deleted successfully");
     }
 }

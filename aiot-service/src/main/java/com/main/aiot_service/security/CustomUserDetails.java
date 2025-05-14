@@ -1,6 +1,6 @@
 package com.main.aiot_service.security;
 
-import com.main.aiot_service.model.dto.UserDto;
+import com.main.aiot_service.model.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
     @Getter
-    private final UserDto user;
+    private final UserDTO user;
     private final String password;
 
 

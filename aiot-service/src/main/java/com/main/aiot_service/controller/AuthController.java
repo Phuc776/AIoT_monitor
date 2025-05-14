@@ -1,7 +1,7 @@
 package com.main.aiot_service.controller;
 
 import com.main.aiot_service.model.request.AuthRequest;
-import com.main.aiot_service.model.response.UserResponse;
+import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.model.response.JwtResponse;
 import com.main.aiot_service.service.IAuthService;
 import lombok.AllArgsConstructor;
@@ -20,12 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public UserResponse resetPassword(@RequestBody String username) {
+    public MessageResponse resetPassword(@RequestBody String username) {
         return authService.resetPassword(username);
-    }
-
-    @PostMapping("/update-password")
-    public UserResponse updatePassword(@RequestBody AuthRequest updatedPasswordRequest) {
-        return authService.updatePassword(updatedPasswordRequest);
     }
 }

@@ -1,8 +1,9 @@
 package com.main.aiot_service.controller;
 
-import com.main.aiot_service.model.dto.UserDto;
+import com.main.aiot_service.model.dto.UserDTO;
+import com.main.aiot_service.model.request.AuthRequest;
 import com.main.aiot_service.model.request.CreateUserRequest;
-import com.main.aiot_service.model.response.UserResponse;
+import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.service.admin.IAdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,12 +18,17 @@ public class AdminController {
     private final IAdminService adminService;
 
     @PostMapping("/create-user")
-    public UserResponse createUser(@RequestBody CreateUserRequest request) {
+    public MessageResponse createUser(@RequestBody CreateUserRequest request) {
         return adminService.createUser(request.getUsername(), request.getPassword(), request.getRole());
     }
 
     @GetMapping()
-    public Page<UserDto> getAllUsers(Pageable pageable) {
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
         return adminService.findAll(pageable);
+    }
+
+    @PostMapping("/update-password")
+    public MessageResponse updatePassword(@RequestBody AuthRequest updatedPasswordRequest) {
+        return adminService.updatePassword(updatedPasswordRequest);
     }
 }

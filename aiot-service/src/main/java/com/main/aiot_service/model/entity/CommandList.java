@@ -1,7 +1,10 @@
 package com.main.aiot_service.model.entity;
 
+import com.main.aiot_service.model.converter.CommandListConverter;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "command_lists")
@@ -15,8 +18,9 @@ public class CommandList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String listName;
+    private String name;
 
-    @Lob
-    private String commands;
+    @Column(columnDefinition = "json")
+    @Convert(converter = CommandListConverter.class)
+    private List<String> commands;
 }

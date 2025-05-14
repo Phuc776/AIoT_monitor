@@ -1,10 +1,10 @@
 package com.main.aiot_service.service;
 
 import com.main.aiot_service.model.entity.User;
-import com.main.aiot_service.model.dto.UserDto;
+import com.main.aiot_service.model.dto.UserDTO;
 import com.main.aiot_service.model.mapper.UserMapper;
 import com.main.aiot_service.model.request.AuthRequest;
-import com.main.aiot_service.model.response.UserResponse;
+import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.model.response.JwtResponse;
 import com.main.aiot_service.repository.UserRepository;
 import com.main.aiot_service.security.CustomUserDetails;
@@ -27,7 +27,7 @@ public class AuthServiceImpl implements IAuthService {
         Optional<User> userOptional = userRepository.findByUsername(loginRequest.getUsername());
         if (userOptional.isPresent() ) {
             User user = userOptional.get();
-            UserDto userDto = UserMapper.toDto(user);
+            UserDTO userDto = UserMapper.toDto(user);
             CustomUserDetails customUserDetails = new CustomUserDetails(userDto, user.getPassword());
             if (new BCryptPasswordEncoder().matches(loginRequest.getPassword(), user.getPassword())) {
                 String token = jwtUtil.generateToken(customUserDetails);
@@ -41,24 +41,13 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public UserResponse resetPassword(String username) {
+    public MessageResponse resetPassword(String username) {
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setPassword(new BCryptPasswordEncoder().encode(PASSWORD));
             userRepository.save(user);
         }
-        return new UserResponse(200, "Password reset successfully");
-    }
-
-    @Override
-    public UserResponse updatePassword(AuthRequest updatePasswordRequest) {
-        Optional<User> userOptional = userRepository.findByUsername(updatePasswordRequest.getUsername());
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setPassword(new BCryptPasswordEncoder().encode(updatePasswordRequest.getPassword()));
-            userRepository.save(user);
-        }
-        return new UserResponse(200, "Password updated successfully");
+        return new MessageResponse(200, "Password reset successfully");
     }
 }

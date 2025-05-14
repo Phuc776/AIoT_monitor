@@ -1,6 +1,6 @@
 package com.main.aiot_service.service.team_lead;
 
-import com.main.aiot_service.model.dto.DeviceGroupDto;
+import com.main.aiot_service.model.dto.DeviceGroupDTO;
 import com.main.aiot_service.model.entity.Device;
 import com.main.aiot_service.model.entity.DeviceGroup;
 import com.main.aiot_service.model.mapper.DeviceGroupMapper;
@@ -35,7 +35,7 @@ public class DeviceGroupServiceImpl implements IDeviceGroupService {
     }
 
     @Override
-    public Page<DeviceGroupDto> getAllGroups(Pageable pageable) {
+    public Page<DeviceGroupDTO> getAllGroups(Pageable pageable) {
         return deviceGroupRepository.findAll(pageable)
                 .map(deviceGroupMapper::toDTO);
     }

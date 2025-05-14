@@ -1,7 +1,7 @@
 package com.main.aiot_service.security;
 
 import com.main.aiot_service.model.entity.Role;
-import com.main.aiot_service.model.dto.UserDto;
+import com.main.aiot_service.model.dto.UserDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username = jwtUtil.extractUsername(token);
                 String role = jwtUtil.extractRole(token);
 
-                UserDto userDto = new UserDto();
+                UserDTO userDto = new UserDTO();
                 userDto.setUsername(username);
                 userDto.setRole(Role.valueOf(role));
 
