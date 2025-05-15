@@ -1,6 +1,7 @@
 package com.main.aiot_service.service;
 
 import com.main.aiot_service.model.request.AuthRequest;
+import com.main.aiot_service.model.request.UpdatePasswordRequest;
 import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.model.response.JwtResponse;
 
@@ -9,5 +10,5 @@ public interface IAuthService {
 
     MessageResponse resetPassword(String username);
 
-    MessageResponse updatePassword(AuthRequest updatePasswordRequest);
+    MessageResponse updatePassword(String username, UpdatePasswordRequest updatePasswordRequest);
 }

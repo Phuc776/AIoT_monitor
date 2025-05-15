@@ -4,6 +4,7 @@ import com.main.aiot_service.model.User;
 import com.main.aiot_service.model.dto.UserDto;
 import com.main.aiot_service.model.mapper.UserMapper;
 import com.main.aiot_service.model.request.AuthRequest;
+import com.main.aiot_service.model.request.UpdatePasswordRequest;
 import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.model.response.JwtResponse;
 import com.main.aiot_service.repository.UserRepository;
@@ -52,13 +53,24 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public MessageResponse updatePassword(AuthRequest updatePasswordRequest) {
-        Optional<User> userOptional = userRepository.findByUsername(updatePasswordRequest.getUsername());
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setPassword(new BCryptPasswordEncoder().encode(updatePasswordRequest.getPassword()));
-            userRepository.save(user);
+    public MessageResponse updatePassword(String username, UpdatePasswordRequest updatePasswordRequest) {
+        Optional<User> opt = userRepository.findByUsername(username);
+        if (opt.isEmpty()) {
+            return new MessageResponse(404, "User not found");
         }
+
+        User user = opt.get();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        // 1. Kiểm tra mật khẩu cũ
+        if (!encoder.matches(updatePasswordRequest.getCurrentPassword(), user.getPassword())) {
+            return new MessageResponse(400, "Current password is incorrect");
+        }
+
+        // 3. Update mật khẩu mới
+        user.setPassword(encoder.encode(updatePasswordRequest.getNewPassword()));
+        userRepository.save(user);
+
         return new MessageResponse(200, "Password updated successfully");
     }
 }

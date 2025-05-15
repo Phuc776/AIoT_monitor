@@ -1,10 +1,13 @@
 package com.main.aiot_service.controller;
 
 import com.main.aiot_service.model.request.AuthRequest;
+import com.main.aiot_service.model.request.UpdatePasswordRequest;
 import com.main.aiot_service.model.response.MessageResponse;
 import com.main.aiot_service.model.response.JwtResponse;
+import com.main.aiot_service.security.CustomUserDetails;
 import com.main.aiot_service.service.IAuthService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -25,7 +28,9 @@ public class AuthController {
     }
 
     @PostMapping("/update-password")
-    public MessageResponse updatePassword(@RequestBody AuthRequest updatedPasswordRequest) {
-        return authService.updatePassword(updatedPasswordRequest);
+    public MessageResponse updatePassword(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                          @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+        String username = userDetails.getUsername();
+        return authService.updatePassword(username, updatePasswordRequest);
     }
 }
