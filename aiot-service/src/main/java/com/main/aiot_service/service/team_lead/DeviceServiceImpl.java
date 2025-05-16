@@ -56,4 +56,10 @@ public class DeviceServiceImpl implements IDeviceService{
         deviceRepository.deleteById(id);
         return new MessageResponse(200, "Device deleted successfully");
     }
+
+    @Override
+    public Device getDeviceEntityById(Long id) {
+        return deviceRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Device not found."));
+    }
 }
