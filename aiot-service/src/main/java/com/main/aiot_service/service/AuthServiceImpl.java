@@ -27,7 +27,7 @@ public class AuthServiceImpl implements IAuthService {
         Optional<User> userOptional = userRepository.findByUsername(loginRequest.getUsername());
         if (userOptional.isPresent() ) {
             User user = userOptional.get();
-            UserDTO userDto = UserMapper.toDto(user);
+            UserDTO userDto = UserMapper.toDTO(user);
             CustomUserDetails customUserDetails = new CustomUserDetails(userDto, user.getPassword());
             if (new BCryptPasswordEncoder().matches(loginRequest.getPassword(), user.getPassword())) {
                 String token = jwtUtil.generateToken(customUserDetails);

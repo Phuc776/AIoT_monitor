@@ -3,11 +3,14 @@ package com.main.aiot_service.controller;
 import com.main.aiot_service.model.dto.UserDTO;
 import com.main.aiot_service.model.request.AuthRequest;
 import com.main.aiot_service.model.request.CreateUserRequest;
+import com.main.aiot_service.model.request.UpdatePasswordRequest;
 import com.main.aiot_service.model.response.MessageResponse;
+import com.main.aiot_service.security.CustomUserDetails;
 import com.main.aiot_service.service.admin.IAdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -28,7 +31,9 @@ public class AdminController {
     }
 
     @PostMapping("/update-password")
-    public MessageResponse updatePassword(@RequestBody AuthRequest updatedPasswordRequest) {
-        return adminService.updatePassword(updatedPasswordRequest);
+    public MessageResponse updatePassword(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                          @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+        String username = userDetails.getUsername();
+        return adminService.updatePassword(username, updatePasswordRequest);
     }
 }

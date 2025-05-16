@@ -6,7 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DeviceRepository extends JpaRepository<Device, Long> {
-    Page<Device> findByDeviceGroupId(Long groupId);
-
     Page<Device> findByDeviceGroupIsNull(Pageable pageable);
 }
