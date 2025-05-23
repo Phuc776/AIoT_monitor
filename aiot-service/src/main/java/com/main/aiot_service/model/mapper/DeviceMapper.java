@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeviceMapper {
 
-    public Device toEntity(DeviceRequest request, DeviceGroup deviceGroup) {
+    public Device toEntity(DeviceRequest request) {
         return Device.builder()
                 .deviceName(request.getDeviceName())
                 .ipAddress(request.getIpAddress())
@@ -23,7 +23,7 @@ public class DeviceMapper {
                 .password(request.getPassword())
                 .publicKey(request.getPublicKey())
                 .osType(request.getOsType())
-                .deviceGroup(deviceGroup)
+
                 .build();
     }
 

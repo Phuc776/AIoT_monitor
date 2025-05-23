@@ -19,15 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeviceServiceImpl implements IDeviceService{
     private final DeviceRepository deviceRepository;
-    private final DeviceGroupRepository deviceGroupRepository;
     private final DeviceMapper deviceMapper;
 
     @Override
     public DeviceResponse createDevice(DeviceRequest request) {
-        DeviceGroup group = deviceGroupRepository.findById(request.getDeviceGroupId())
-                .orElseThrow(() -> new EntityNotFoundException("Device Group not found."));
-
-        Device device = deviceMapper.toEntity(request, group);
+        Device device = deviceMapper.toEntity(request);
         deviceRepository.save(device);
         return new DeviceResponse(200, "Create device successfully", deviceMapper.toDTO(device));
     }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class OperatorCommandRequest {
-    private String deviceName;
+    private String operatorName;
+    private Long deviceId;
     private String command;
 }

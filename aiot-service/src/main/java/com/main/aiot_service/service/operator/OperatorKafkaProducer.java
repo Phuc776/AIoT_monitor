@@ -13,9 +13,10 @@ import java.util.Map;
 public class OperatorKafkaProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendSSHCommand(String deviceName, String command) throws JsonProcessingException {
-        Map<String, String> message = Map.of(
-                "device", deviceName,
+    public void sendSSHCommand(String operator, Long deviceId, String command) throws JsonProcessingException {
+        Map<String, Object> message = Map.of(
+                "operator", operator,
+                "deviceId", deviceId,
                 "command", command
         );
         kafkaTemplate.send("ssh-commands", new ObjectMapper().writeValueAsString(message));

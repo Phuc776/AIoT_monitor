@@ -19,7 +19,11 @@ public class OperatorController {
 
     @PostMapping("/ssh-command")
     public MessageResponse sendSSHCommand(@RequestBody OperatorCommandRequest request) throws JsonProcessingException {
-        kafkaProducer.sendSSHCommand(request.getDeviceName(), request.getCommand());
+        kafkaProducer.sendSSHCommand(
+                request.getOperatorName(),
+                request.getDeviceId(),
+                request.getCommand()
+        );
         return new MessageResponse(200, "SSH command sent to device");
     }
     @PostMapping("/file-edit")
