@@ -34,7 +34,7 @@ public class DeviceController {
     }
 
     @DeleteMapping("/{id}")
-    public MessageResponse deleteDevice(Long id) {
+    public MessageResponse deleteDevice(@PathVariable Long id) {
         return deviceService.deleteDevice(id);
     }
 }

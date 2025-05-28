@@ -12,4 +12,5 @@ public interface IDeviceGroupService {
     DeviceGroupResponse createGroup(DeviceGroupRequest request);
     Page<DeviceGroupDTO> getAllGroups(Pageable pageable);
     DeviceGroupResponse addDevicesToGroup(Long groupId, List<Long> deviceIds);
+    DeviceGroupDTO getGroupById(Long id);
 }

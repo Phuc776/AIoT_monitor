@@ -16,7 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -86,19 +88,36 @@ public class ProfileServiceImpl implements IProfileService{
         profileRepository.delete(profile);
         return new MessageResponse(200, "Profile deleted successfully");
     }
-
     @Override
+    @Transactional
     public MessageResponse assignOperatorsToProfile(Long profileId, List<Long> operatorIds) {
         Profile profile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
+
+        // 2. Xóa hết các liên kết cũ
+        List<User> previouslyAssigned = userRepository.findAllByAssignedProfiles_Id(profileId);
+        for (User u : previouslyAssigned) {
+            u.getAssignedProfiles().removeIf(p -> p.getId().equals(profileId));
+        }
+        userRepository.saveAll(previouslyAssigned);
 
         List<User> operators = userRepository.findAllById(operatorIds);
         if (operators.size() != operatorIds.size()) {
             throw new RuntimeException("One or more users not found");
         }
 
-        profile.setAssignedOperators(operators);
-        profileRepository.save(profile);
+//        profile.setAssignedOperators(operators);
+//        profileRepository.save(profile);
+        for (User user : operators) {
+            // khởi tạo list nếu null
+            if (user.getAssignedProfiles() == null) {
+                user.setAssignedProfiles(new ArrayList<>());
+            }
+            user.getAssignedProfiles().add(profile);
+        }
+
+        // 4. Save tất cả User
+        userRepository.saveAll(operators);
 
         return new MessageResponse(200, "Operators assigned to profile successfully");
     }

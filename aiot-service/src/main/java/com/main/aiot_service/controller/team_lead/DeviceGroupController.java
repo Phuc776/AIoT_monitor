@@ -44,4 +44,9 @@ public class DeviceGroupController {
     ) {
         return deviceGroupService.addDevicesToGroup(groupId, deviceIds);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DeviceGroupDTO> getGroupById(@PathVariable Long id) {
+        return ResponseEntity.ok(deviceGroupService.getGroupById(id));
+    }
 }

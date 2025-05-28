@@ -10,6 +10,6 @@ import java.util.List;
 public class DeviceGroupDTO {
     private Long id;
     private String groupName;
-    private List<Long> deviceIds;
+    private List<DeviceDTO> devices;
 }
 

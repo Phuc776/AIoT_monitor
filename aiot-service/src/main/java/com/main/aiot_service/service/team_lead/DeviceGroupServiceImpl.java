@@ -53,4 +53,12 @@ public class DeviceGroupServiceImpl implements IDeviceGroupService {
 
         return new DeviceGroupResponse(200, "Devices added to group", deviceGroupMapper.toDTO(group));
     }
+
+    @Override
+    public DeviceGroupDTO getGroupById(Long id) {
+        DeviceGroup group = deviceGroupRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Device group not found"));
+        return deviceGroupMapper.toDTO(group);
+    }
+
 }
